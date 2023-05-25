@@ -26,6 +26,5 @@ jobs:
       - name: Build and publish spring-academy-lab
         shell: bash
         run: |
-#          packages/spring-academy-lab/build.sh
           /tmp/imgpkg push -i ghcr.io/${{github.repository}}/spring-academy-lab:sha-${REPOSITORY_SHA7} -f packages/spring-academy-lab --registry-username=${{github.actor}} --registry-password=${{secrets.GITHUB_TOKEN}}
 
