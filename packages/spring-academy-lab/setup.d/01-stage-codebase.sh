@@ -29,13 +29,13 @@ checkout_to_label() {
 LESSON_REPO_DIR="${LESSON_REPO_DIR:-$HOME/exercises}"
 
 if [[ ! -d "$LESSON_REPO_DIR" ]]; then
-  echo "No codebase at $LESSON_REPO_DIR. Exiting."
-  exit 1
+  echo "No codebase at $LESSON_REPO_DIR. Exiting without error."
+  exit 0
 fi
 
 if [[ -z "$LESSON_LABEL" ]]; then
-  echo "No lesson label provided. Exiting."
-  exit 1
+  echo "No lesson label provided. Exiting without error."
+  exit 0
 fi
 
 cd "$LESSON_REPO_DIR"
