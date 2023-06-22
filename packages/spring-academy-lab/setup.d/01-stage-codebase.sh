@@ -30,10 +30,12 @@ LESSON_REPO_DIR="${LESSON_REPO_DIR:-$HOME/exercises}"
 
 if [[ ! -d "$LESSON_REPO_DIR" ]]; then
   echo "No codebase at $LESSON_REPO_DIR. Exiting."
+  exit 1
 fi
 
 if [[ -z "$LESSON_LABEL" ]]; then
   echo "No lesson label provided. Exiting."
+  exit 1
 fi
 
 cd "$LESSON_REPO_DIR"
