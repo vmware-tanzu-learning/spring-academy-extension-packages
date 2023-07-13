@@ -26,5 +26,12 @@ jobs:
       - name: Build and publish spring-academy-lab
         shell: bash
         run: |
-          /tmp/imgpkg push -i ghcr.io/${{github.repository}}/spring-academy-lab:sha-${REPOSITORY_SHA7} -f packages/spring-academy-lab --registry-username=${{github.actor}} --registry-password=${{secrets.GITHUB_TOKEN}}
+          SHA_ARTIFACT=ghcr.io/${{github.repository}}/spring-academy-lab:sha-${REPOSITORY_SHA7}
+          LATEST_ARTIFACT=ghcr.io/${{github.repository}}/spring-academy-lab:latest
+          /tmp/imgpkg push -i $SHA_ARTIFACT -f packages/spring-academy-lab --registry-username=${{github.actor}} --registry-password=${{secrets.GITHUB_TOKEN}}
+          echo ${{secrets.GITHUB_TOKEN}} | docker login ghcr.io --username ${{github.actor}} --password-stdin
+          docker pull $SHA_ARTIFACT
+          docker tag $SHA_ARTIFACT $LATEST_ARTIFACT
+          docker push $LATEST_ARTIFACT
+
 
