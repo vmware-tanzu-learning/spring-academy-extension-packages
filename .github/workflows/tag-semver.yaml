@@ -1,0 +1,40 @@
+name: Semver-Tag already-published package SHA
+
+on:
+  push:
+    branches:
+      - main    
+    tags:
+      - "v[0-9]+.[0-9]+.[0-9]+**"
+  workflow_run:
+    workflows: ["Publish packages"]
+    types:
+      - completed
+
+jobs:
+  tag-previously-published-package-with-semver:
+    runs-on: ubuntu-20.04
+
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v2
+
+      - name: Calculate variables
+        run: |
+          echo "REPOSITORY_SHA7=${GITHUB_SHA::7}" >>${GITHUB_ENV}
+
+      - name: Tag existing SHA tag as semver also
+        shell: bash
+        run: |
+          echo ${{secrets.GITHUB_TOKEN}} | docker login ghcr.io --username ${{github.actor}} --password-stdin
+          SHA_ARTIFACT=ghcr.io/${{github.repository}}/spring-academy-lab:sha-${REPOSITORY_SHA7}
+          LATEST_ARTIFACT=ghcr.io/${{github.repository}}/spring-academy-lab:latest
+          SEMVER_ARTIFACT=ghcr.io/${{github.repository}}/spring-academy-lab:${{ github.ref_name }}
+          docker pull $SHA_ARTIFACT
+          for tag in "$SEMVER_ARTIFACT" "$LATEST_ARTIFACT" ; do \
+            echo === Tagging $SHA_ARTIFACT with alias $tag
+            docker tag $SHA_ARTIFACT $tag; \
+            docker push $tag; \
+          done
+
+
