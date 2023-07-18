@@ -1,9 +1,9 @@
-name: Semver-Tag already-published package SHA
+name: Publish packages with semver
 
 on:
   push:
     workflow_run:
-      workflows: ["Publish packages"]
+      workflows: ["Publish packages with Git SHA"]
       types:
         - completed
     tags:
