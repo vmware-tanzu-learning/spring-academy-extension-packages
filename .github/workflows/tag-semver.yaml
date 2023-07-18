@@ -2,14 +2,12 @@ name: Semver-Tag already-published package SHA
 
 on:
   push:
-    branches:
-      - main    
-    tags:
-      - "v[0-9]+.[0-9]+.[0-9]+**"
     workflow_run:
       workflows: ["Publish packages"]
       types:
         - completed
+    tags:
+      - "v[0-9]+.[0-9]+.[0-9]+**"
 
 jobs:
   tag-previously-published-package-with-semver:
