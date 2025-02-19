@@ -11,7 +11,7 @@ on:
 
 jobs:
   tag-previously-published-package-with-semver:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
 
     steps:
       - name: Check out the repo
